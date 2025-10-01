@@ -116,10 +116,10 @@ onUnmounted(() => {
                         <p>با همکاری جوانان خلاق و نوآور، صنعت را متحول کنیم</p>
                         <div class="cta-buttons">
                             <button class="cta-primary" @click="scrollToSection('youth-opportunities')">
-                                فرصت‌های شغلی
+                                دوره ها
                             </button>
                             <button class="cta-secondary" @click="scrollToSection('youth-projects')">
-                                پروژه‌های جوانان
+                                گردشگری صنعتی
                             </button>
                         </div>
                     </div>

@@ -1,10 +1,12 @@
 <script setup>
-import {ref} from 'vue';
+import {ref, onMounted, onUnmounted} from 'vue';
 import {useRouter} from 'vue-router';
 
 const router = useRouter();
 const searchQuery = ref('');
 const isMenuOpen = ref(false);
+const showHeader = ref(true);
+const lastScrollPosition = ref(0);
 
 const navigationItems = [
     {name: 'خانه', path: '/'},
@@ -14,6 +16,8 @@ const navigationItems = [
     {name: 'دوره‌ها', path: '/courses'},
     {name: 'گردشگری صنعتی', path: '/industrial-tourism'},
     {name: 'ارتباط با ما', path: '/contact'},
+    {name: 'ثبت نام/ورود', path: '/login'},
+
 ];
 
 const handleSearch = () => {
@@ -26,10 +30,37 @@ const handleSearch = () => {
 const toggleMobileMenu = () => {
     isMenuOpen.value = !isMenuOpen.value;
 };
+
+// Handle scroll events
+const onScroll = () => {
+    // Get current scroll position
+    const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+    // If user scrolls down and is past the threshold, hide header
+    if (currentScrollPosition > lastScrollPosition.value && currentScrollPosition > 100) {
+        showHeader.value = false;
+    }
+    // If user scrolls up, show header
+    else {
+        showHeader.value = true;
+    }
+
+    // Update last scroll position
+    lastScrollPosition.value = currentScrollPosition;
+};
+
+onMounted(() => {
+    window.addEventListener('scroll', onScroll);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', onScroll);
+});
 </script>
 
 <template>
-    <header class="header">
+    <header class="header" :class="{ 'header-hidden': !showHeader }">
+        <!-- Rest of the header content remains the same -->
         <div class="header-container">
             <!-- Logo -->
             <div class="logo-container">
@@ -99,15 +130,23 @@ const toggleMobileMenu = () => {
 </template>
 
 <style scoped>
+/* Previous styles remain the same */
+
 .header {
     background: linear-gradient(135deg, #1a2a6c, #2c3e50);
     color: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: absolute;
+    position: fixed; /* Changed from absolute to fixed */
     left: 0;
     right: 0;
     top: 0;
     z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Add this class for hiding the header */
+.header-hidden {
+    transform: translateY(-100%);
 }
 
 .header-container {
@@ -150,7 +189,7 @@ const toggleMobileMenu = () => {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 1.5rem;
+    gap: .3rem;
 }
 
 .nav-links a {
@@ -345,7 +384,9 @@ const toggleMobileMenu = () => {
     .search-container {
         flex: 0 0 250px;
     }
-
+    .header {
+        padding: 0 1rem;
+    }
     .nav-links {
         gap: 1rem;
     }
@@ -354,8 +395,11 @@ const toggleMobileMenu = () => {
 @media (max-width: 768px) {
     .header-container {
         height: 70px;
-    }
 
+    }
+    .header {
+        padding: 0 1rem;
+    }
     .logo-text {
         font-size: 1.5rem;
     }
