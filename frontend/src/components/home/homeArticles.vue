@@ -26,7 +26,7 @@ async function getArticles() {
             params: { show: true }
         });
         articles.value = response.data;
-        console.log("مقالات دریافت شده:", articles.value);
+        // console.log("مقالات دریافت شده:", articles.value);
     } catch (error) {
         console.error("خطا در دریافت مقالات", error);
     } finally {

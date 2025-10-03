@@ -52,7 +52,7 @@ async function getSocialLinks(contactId) {
         socialLinks.value = response.data.filter(
             link => link.contact === contactId
         );
-        console.log(socialLinks.value)
+        // console.log(socialLinks.value)
     } catch (error) {
         console.error("خطا در دریافت لینک‌های اجتماعی", error);
     }

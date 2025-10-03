@@ -16,7 +16,7 @@ const navigationItems = [
     {name: 'دوره‌ها', path: '/courses'},
     {name: 'گردشگری صنعتی', path: '/industrial-tourism'},
     {name: 'ارتباط با ما', path: '/contact'},
-    {name: 'ثبت نام/ورود', path: '/login'},
+    {name: 'ثبت نام/ورود', path: '/user'},
 
 ];
 
